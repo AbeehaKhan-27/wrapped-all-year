@@ -3,6 +3,8 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from dotenv import load_dotenv
 import utility
+import time
+import pandas as pd
 
 def main() -> None:
     load_dotenv(override=True)
@@ -26,6 +28,16 @@ def main() -> None:
 
     track_id = '4iJyoBOLtHqaGxP12qzhQI'
     print(utility.get_track_features(sp, track_id))
+
+    tracks = []
+    for i in range(len(track_ids)):
+        time.sleep[.5]
+        track = utility.get_track_features(track_ids[i])
+        tracks.append(track)
+    print(tracks)
+
+    df = pd.DataFrame(tracks, columns = ['name', 'album', 'artist', 'spotify_url', 'album_cover'])
+    df.head(5)
 
 
 if __name__ == "__main__":
