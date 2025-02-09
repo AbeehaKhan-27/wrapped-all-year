@@ -1,6 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from dotenv import load_dotenv
+from utility import get_saved_tracks
 
 def main() -> None:
     load_dotenv()
@@ -8,11 +9,10 @@ def main() -> None:
     scope = "user-library-read"
 
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+    tracks = get_saved_tracks(sp)
+    print(tracks)
 
-    results = sp.current_user_saved_tracks()
-    for idx, item in enumerate(results['items']):
-        track = item['track']
-        print(idx, track['artists'][0]['name'], " – ", track['name'])
+
 
 if __name__ == "__main__":
     main()
