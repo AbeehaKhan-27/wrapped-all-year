@@ -1,9 +1,13 @@
-from spotipy import Spotify
+import spotipy
 
-def get_saved_tracks(sp: Spotify) -> list[tuple[int, str]]:
-    results = sp.current_user_saved_tracks()
-    tracks = []
-    for idx, item in enumerate(results["items"]):
-        track = item["track"]
-        tracks.append((idx, track["artists"][0]["name"] + " – " + track["name"]))
-    return tracks
+def get_user_playlists(sp, user: str) -> tuple: #TODO Figure out what dtype this is
+    playlists = sp.user_playlists('')
+    while playlists:
+        for i, playlist in enumerate(playlists['items']):
+            print("%4d %s %s" % (i + 1 + playlists['offset'], playlist['uri'],  playlist['name']))
+        if playlists['next']:
+            playlists = sp.next(playlists)
+        else:
+            playlists = None
+    return playlists
+

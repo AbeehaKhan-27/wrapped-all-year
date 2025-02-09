@@ -1,18 +1,18 @@
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
-from utility import get_saved_tracks
+import utility
 
 def main() -> None:
     load_dotenv()
 
-    scope = "user-library-read"
+    auth_manager = SpotifyClientCredentials()
+    sp = spotipy.Spotify(auth_manager=auth_manager)
 
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-    tracks = get_saved_tracks(sp)
-    print(tracks)
-
+    playlists = utility.get_user_playlists(sp, "bg7vyk7hmq2vz1hrwcdlhvmbq")
+    print(playlists)
 
 
 if __name__ == "__main__":
     main()
+
